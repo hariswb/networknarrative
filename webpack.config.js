@@ -3,7 +3,7 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: ['core-js/stable','regenerator-runtime/runtime','./src/index.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',

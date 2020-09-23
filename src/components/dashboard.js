@@ -2,15 +2,17 @@ import React,  {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import Chart from "./chart.js"
 import lesmischars from "../data/lesmischars.json"
-
+import lesmisgraph from "../data/lesmisgraph.json"
 function Dashboard(props) {
-	const data = JSON.parse(lesmischars)
-	const mapdata = data.map(x=>x.character)
-	console.log(mapdata)
+	const lesmisChars = JSON.parse(lesmischars)
+	const lesmisGraph = lesmisgraph
+	// console.log(lesmisChars)
 	return (
 	  	<div className="container">
 	  		<h1>Hello, {props.name}</h1>
-	  		<Chart/>
+	  		<Chart nodes={lesmisChars}
+	  			   edges={lesmisGraph["edges"]}
+	  			   />
 	  	</div>
 	);
 

@@ -4,7 +4,7 @@ body {
 }
 
 div {
-	background-color: teal;
+	/*background-color: teal;*/
 }
 
 img {
@@ -12,5 +12,10 @@ img {
 	height: 426px;
 }
 .container{
+	/*background-color: blue;*/
+}
+.chartbox{
 	background-color: blue;
+	width:500px;
+	height: 500px;
 }

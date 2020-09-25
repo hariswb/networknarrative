@@ -23,10 +23,25 @@ const drag = simulation => {
 		.on("end", dragended);
 }
 
-const nodeColor=(category)=> {
-  	const scale = d3.scaleOrdinal(d3.schemeCategory10)
-  	// console.log(category)
-  	return d => scale(d[category]);
+const nodeColor=(category,highest)=> {
+	const colorScheme = {
+		"plot_summary": d3.schemeDark2[0],
+		"community":(d)=>getColor(d,"interpolateTurbo"),
+		"degree_centrality": (d)=>getColor(d,"interpolatePlasma"),
+		"eigenvector_centrality": (d)=>getColor(d,"interpolateViridis"),
+		"betweenness_centrality": (d)=>getColor(d,"interpolateCool"),
+		"closeness_centrality": (d)=>getColor(d,"interpolateCividis"),
+		"shortest_path":d3.schemeCategory10[9],
+		"spanning_tree":d3.schemeAccent[4],
+	}
+
+	function getColor(d,scheme){
+		return d3.scaleSequential(d3[scheme])(d[category]/highest[category])
+	}
+
+	console.log(category)
+	return colorScheme[category]
+  	
 }
 
 function Chart(props){
@@ -35,8 +50,11 @@ function Chart(props){
 	const ref = useRef()
 	const [focus,setFocus] = useState("")	
 	const [init,setInit] = useState(0);
+
+    
+    
+
 	useEffect(() => {
-		console.log(props.category,init)
 
 		if(init < 1 || props.category == "spanning_tree"){
 			const edges = props.category == "spanning_tree"?props.spanning_tree:props.edges
@@ -80,7 +98,7 @@ function Chart(props){
 		      .data(nodes)
 		      .join("circle")
 		      .attr("r", 7)
-		      .attr("fill", nodeColor(props.category))
+		      .attr("fill", nodeColor(props.category,props.highest))
 		      .call(drag(simulation))
 		      .on("click",function(){ 
 		      	d3.select(this).text(d=> setFocus(d.character))})
@@ -93,35 +111,23 @@ function Chart(props){
 			    node.attr("cx", d => d.x)
 			        .attr("cy", d => d.y);
 			  });
-	      	if(props.category=="spanning_tree"){
-	      		setInit(0)
-	      	}else{
-	      		setInit(1)
-	      	}
+
+	      	props.category=="spanning_tree"?setInit(0):setInit(1)
       	}else if(init > 0){
       		d3.selectAll("circle")
-      		  .attr("fill", nodeColor(props.category))  
+      		  .attr("fill", nodeColor(props.category,props.highest))  
       	}else if(init > 0 && props.category == "spanning_tree"){
       		setInit(0)
-      		console.log("oooooooiiii")
       	}
+
   	}, [props.category])
 
-
-	function getNodeIndex(charName){
-		return props.nodes.findIndex((node)=>node.character == charName)
-	}
-
-	function getNodeInfo(charIndex){
-		return charIndex >= 0? props.nodes[charIndex].info:"none"
-	}
+	useEffect(()=>{
+		props.onChange(focus)
+	},[focus])
 
 	return(
-			<div className="chartbox">
-				<div>
-					<h3>{focus}</h3>
-					<h4>{getNodeInfo(getNodeIndex(focus))}</h4>
-				</div>
+			<div className="chart">
 				<svg 
 		      		ref={ref}
 		      	/>

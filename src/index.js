@@ -11,7 +11,7 @@ const App = () => {
 		<div>
 		    <h2>Header</h2>
 		    {/*<img src={MyImage} />*/}
-		    <Dashboard name="haris"/>
+		    <Dashboard/>
 		</div>
 	);
 };

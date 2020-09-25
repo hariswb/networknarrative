@@ -13,8 +13,19 @@ img {
 }
 .container{
 	/*background-color: blue;*/
+	display: flex;
 }
+
+.menu{
+	/*background-color: blue;*/
+	width: 300px;
+}	
+
 .chartbox{
+	/*background-color: blue;*/
+}
+
+.chart{
 	background-color: ;
 	width:500px;
 	height: 500px;

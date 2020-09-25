@@ -17,21 +17,54 @@ const menu = [
 				"shortest_path",
 				"spanning_tree",
 				]
-// console.log(lesmisGraph)
+
+const highestOfCategories = {}
+menu.forEach((x)=>{
+	highestOfCategories[x]= lesmisChars.map(b=>b[x])
+	  						  .sort((a,b)=>a-b)[lesmisChars.length-1]
+	}
+)
+
+// const  = menu.map((x)=>{
+// 	return x:{lesmisChars.map(b=>b[x])
+// 	  						  .sort((a,b)=>a-b)[lesmisChars.length-1]}
+// })
+
+console.log(highestOfCategories)
+
+
 function Dashboard(props) {
 	const [graphCategory,setGraphCategory] =useState("plot_summary")
-
+	const [focus,setFocus]=useState("")
 	const menuButtons = menu.map(d=><li key={d}><button onClick={()=>setGraphCategory(d)}>{d}</button></li>)
+	
+	function handleChange(d){ 
+		setFocus(d)
+	}
+	
+	function getNodeInfo(charName){
+		const charIndex= lesmisChars.findIndex(node=>node.character == charName)
+		return charIndex >= 0? lesmisChars[charIndex].info:"none"
+	}
+
 	return (
 	  	<div className="container">
-	  		<h1>Hello, {props.name}</h1>
-	  		<div><ul>{menuButtons}</ul></div>
-	  		<Chart nodes={lesmisChars}
-	  			   edges={lesmisGraph["edges"]}
-	  			   spanning_tree={lesmisGraph["spanning_tree"]}
-	  			   category={graphCategory}
-	  			   menu={menu}
-	  			   />
+	  		<div className="menu">
+		  		<div><ul>{menuButtons}</ul></div>
+		  		<div>
+		  			<h4>{focus}</h4>
+		  			<p>{getNodeInfo(focus)}</p>
+		  		</div>
+	  		</div>
+	  		<div className="chartbox">
+		  		<Chart nodes={lesmisChars}
+		  			   edges={lesmisGraph["edges"]}
+		  			   spanning_tree={lesmisGraph["spanning_tree"]}
+		  			   category={graphCategory}
+		  			   highest={highestOfCategories}
+		  			   onChange={(d)=>handleChange(d)}
+		  			   />
+	  		</div>
 	  	</div>
 	);
 

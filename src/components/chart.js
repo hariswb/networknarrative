@@ -75,13 +75,16 @@ function Chart(props){
 		    				.on("click",function(){
 		    					d3.select(this).text(d=> setFocus(""))})
 
+		    
+
 			const links = edges.map(d => Object.create({"source": d[0],"target":d[1],"value":1}))
 	  		const nodes = props.nodes.map(d => Object.create(d));
 
 		    const simulation = d3.forceSimulation(nodes)
-	              .force("center", d3.forceCenter(width/2, height/2))                  
+	              .force("center", d3.forceCenter(width/2, height/2))  
 	              .force("charge", d3.forceManyBody())
 	              .force("link", d3.forceLink(links).id(d => d.character))
+	              .force("radial",props.category=="spanning_tree"?d3.forceRadial(width/2):null)
 
 	        const link = layer2
 		      .attr("stroke", "#999")

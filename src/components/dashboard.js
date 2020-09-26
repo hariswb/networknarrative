@@ -21,18 +21,10 @@ const menu = [
 const highestOfCategories = {}
 menu.forEach((x)=>{
 	highestOfCategories[x]= lesmisChars.map(b=>b[x])
-	  						  .sort((a,b)=>a-b)[lesmisChars.length-1]
+	  						.sort((a,b)=>a-b)[lesmisChars.length-1]
 	}
 )
-
-// const  = menu.map((x)=>{
-// 	return x:{lesmisChars.map(b=>b[x])
-// 	  						  .sort((a,b)=>a-b)[lesmisChars.length-1]}
-// })
-
-console.log(highestOfCategories)
-
-
+console.log(lesmisGraph)
 function Dashboard(props) {
 	const [graphCategory,setGraphCategory] =useState("plot_summary")
 	const [focus,setFocus]=useState("")
@@ -63,6 +55,8 @@ function Dashboard(props) {
 		  			   category={graphCategory}
 		  			   highest={highestOfCategories}
 		  			   onChange={(d)=>handleChange(d)}
+		  			   shortest_path={lesmisGraph.shortest_path}
+		  			   shortest_path_nodes={lesmisGraph.shortest_path_nodes}
 		  			   />
 	  		</div>
 	  	</div>

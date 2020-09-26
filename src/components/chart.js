@@ -23,7 +23,7 @@ const drag = simulation => {
 		.on("end", dragended);
 }
 
-const nodeColor=(category,highest)=> {
+const nodeColor=(category,highest,shortest_path_nodes)=> {
 	const colorScheme = {
 		"plot_summary": d3.schemeDark2[0],
 		"community":(d)=>getColor(d,"interpolateTurbo"),
@@ -31,7 +31,8 @@ const nodeColor=(category,highest)=> {
 		"eigenvector_centrality": (d)=>getColor(d,"interpolateViridis"),
 		"betweenness_centrality": (d)=>getColor(d,"interpolateCool"),
 		"closeness_centrality": (d)=>getColor(d,"interpolateCividis"),
-		"shortest_path":d3.schemeCategory10[9],
+		"shortest_path":(d)=>shortest_path_nodes.includes(d.character)?
+							d3.schemeCategory10[1]:d3.schemeCategory10[9],
 		"spanning_tree":d3.schemeAccent[4],
 	}
 
@@ -41,7 +42,7 @@ const nodeColor=(category,highest)=> {
 
 	console.log(category)
 	return colorScheme[category]
-  	
+
 }
 
 function Chart(props){
@@ -50,9 +51,6 @@ function Chart(props){
 	const ref = useRef()
 	const [focus,setFocus] = useState("")	
 	const [init,setInit] = useState(0);
-
-    
-    
 
 	useEffect(() => {
 
@@ -101,10 +99,12 @@ function Chart(props){
 		      .data(nodes)
 		      .join("circle")
 		      .attr("r", 7)
-		      .attr("fill", nodeColor(props.category,props.highest))
+		      .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
 		      .call(drag(simulation))
 		      .on("click",function(){ 
 		      	d3.select(this).text(d=> setFocus(d.character))})
+		      
+
 
 	      	simulation.on("tick", () => {
 			    link.attr("x1", d => d.source.x)
@@ -116,9 +116,9 @@ function Chart(props){
 			  });
 
 	      	props.category=="spanning_tree"?setInit(0):setInit(1)
-      	}else if(init > 0){
+      	}else if(init > 0 && props.category){
       		d3.selectAll("circle")
-      		  .attr("fill", nodeColor(props.category,props.highest))  
+      		  .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
       	}else if(init > 0 && props.category == "spanning_tree"){
       		setInit(0)
       	}

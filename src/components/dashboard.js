@@ -1,13 +1,14 @@
 import React,  {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import Chart from "./chart.js"
+import Menu from "./menu.js"
 import lesmischars from "../data/lesmischars.json"
 import lesmisgraph from "../data/lesmisgraph.json"
 
 const lesmisChars = JSON.parse(lesmischars)
 const lesmisGraph = lesmisgraph
 
-const menu = [	
+const categories = [	
 				"plot_summary", 
 				"degree_centrality", 
 				"eigenvector_centrality", 
@@ -19,42 +20,42 @@ const menu = [
 				]
 
 const highestOfCategories = {}
-menu.forEach((x)=>{
+categories.forEach((x)=>{
 	highestOfCategories[x]= lesmisChars.map(b=>b[x])
 	  						.sort((a,b)=>a-b)[lesmisChars.length-1]
 	}
 )
-// console.log(lesmisGraph)
+
 function Dashboard(props) {
-	const [graphCategory,setGraphCategory] =useState("plot_summary")
+	const [category,setCategory] =useState("plot_summary")
 	const [focus,setFocus]=useState("")
-	const menuButtons = menu.map(d=><li key={d}><button onClick={()=>setGraphCategory(d)}>{d}</button></li>)
 	
-	function handleChange(d){ 
+	function handleFocus(d){ 
 		setFocus(d)
 	}
-	
-	function getNodeInfo(charName){
-		const charIndex= lesmisChars.findIndex(node=>node.character == charName)
-		return charIndex >= 0? lesmisChars[charIndex].info:"none"
-	}
 
+	function handleCategory(d){ 
+		setCategory(d)
+	}
+	
 	return (
 	  	<div className="container">
-	  		<div className="menu">
-		  		<div><ul>{menuButtons}</ul></div>
-		  		<div>
-		  			<h4>{focus}</h4>
-		  			<p>{getNodeInfo(focus)}</p>
-		  		</div>
-	  		</div>
+	  		<Menu 
+	  			focus = {focus}
+	  			category = {category}
+	  			categories={categories}
+	  			chars = {lesmisChars}
+	  			graph = {lesmisGraph}
+	  			onCategory = {(d)=>handleCategory(d)}
+	  		/>
+
 	  		<div className="chartbox">
 		  		<Chart nodes={lesmisChars}
 		  			   edges={lesmisGraph["edges"]}
 		  			   spanning_tree={lesmisGraph["spanning_tree"]}
-		  			   category={graphCategory}
+		  			   category={category}
 		  			   highest={highestOfCategories}
-		  			   onChange={(d)=>handleChange(d)}
+		  			   onFocusChange={(d)=>handleFocus(d)}
 		  			   shortest_path_edges={lesmisGraph.shortest_path}
 		  			   shortest_path_nodes={lesmisGraph.shortest_path_nodes}
 		  			   />

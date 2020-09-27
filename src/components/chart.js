@@ -40,7 +40,6 @@ const nodeColor=(category,highest,shortest_path_nodes)=> {
 		return d3.scaleSequential(d3[scheme])(d[category]/highest[category])
 	}
 
-	console.log(category)
 	return colorScheme[category]
 
 }
@@ -67,7 +66,6 @@ function Chart(props){
 	const width = 500
 	const height = 500
 	const ref = useRef()
-	const [focus,setFocus] = useState("")	
 	const [init,setInit] = useState(0);
 
 	useEffect(() => {
@@ -89,9 +87,7 @@ function Chart(props){
 	      					.attr("height", height)
 		    				.attr("fill","white")
 		    				.on("click",function(){
-		    					d3.select(this).text(d=> setFocus(""))})
-
-		    
+		    					d3.select(this).text(d=> props.onFocusChange(""))})
 
 			const links = edges.map(d => Object.create({"source": d[0],"target":d[1],"value":1}))
 	  		const nodes = props.nodes.map(d => Object.create(d));
@@ -120,7 +116,7 @@ function Chart(props){
 		      .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
 		      .call(drag(simulation))
 		      .on("click",function(){ 
-		      	d3.select(this).text(d=> setFocus(d.character))})
+		      	d3.select(this).text(d=> props.onFocusChange(d.character))})
 		      
 	      	simulation.on("tick", () => {
 			    link.attr("x1", d => d.source.x)
@@ -142,10 +138,6 @@ function Chart(props){
       	}
 
   	}, [props.category])
-
-	useEffect(()=>{
-		props.onChange(focus)
-	},[focus])
 
 	return(
 			<div className="chart">

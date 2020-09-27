@@ -24,7 +24,7 @@ menu.forEach((x)=>{
 	  						.sort((a,b)=>a-b)[lesmisChars.length-1]
 	}
 )
-console.log(lesmisGraph)
+// console.log(lesmisGraph)
 function Dashboard(props) {
 	const [graphCategory,setGraphCategory] =useState("plot_summary")
 	const [focus,setFocus]=useState("")
@@ -55,7 +55,7 @@ function Dashboard(props) {
 		  			   category={graphCategory}
 		  			   highest={highestOfCategories}
 		  			   onChange={(d)=>handleChange(d)}
-		  			   shortest_path={lesmisGraph.shortest_path}
+		  			   shortest_path_edges={lesmisGraph.shortest_path}
 		  			   shortest_path_nodes={lesmisGraph.shortest_path_nodes}
 		  			   />
 	  		</div>

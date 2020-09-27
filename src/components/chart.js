@@ -45,6 +45,24 @@ const nodeColor=(category,highest,shortest_path_nodes)=> {
 
 }
 
+const linkColor=(category,edges)=>{
+	if(category=="shortest_path"){
+		return d=>{
+			let result = "#999"
+			for(let i =0;i<edges.length;i++){
+				if((edges[i][0]==d.source.character&&edges[i][1]==d.target.character)||
+					(edges[i][1]==d.source.character&&edges[i][0]==d.target.character)){
+					result = "red"
+					break
+				}
+			}
+			return result
+		}
+	}else{
+		return "#999"
+	}
+}
+
 function Chart(props){
 	const width = 500
 	const height = 500
@@ -85,11 +103,11 @@ function Chart(props){
 	              .force("radial",props.category=="spanning_tree"?d3.forceRadial(width/2):null)
 
 	        const link = layer2
-		      .attr("stroke", "#999")
 		      .attr("stroke-opacity", 0.6)
 		      .selectAll("line")
 		      .data(links)
 		      .join("line")
+		      .attr("stroke", linkColor(props.category,props.shortest_path_edges))
 		      .attr("stroke-width", d => Math.sqrt(d.value));
 
 		    const node = layer3
@@ -104,8 +122,6 @@ function Chart(props){
 		      .on("click",function(){ 
 		      	d3.select(this).text(d=> setFocus(d.character))})
 		      
-
-
 	      	simulation.on("tick", () => {
 			    link.attr("x1", d => d.source.x)
 			        .attr("y1", d => d.source.y)
@@ -116,9 +132,11 @@ function Chart(props){
 			  });
 
 	      	props.category=="spanning_tree"?setInit(0):setInit(1)
-      	}else if(init > 0 && props.category){
+      	}else if(init > 0 ){
       		d3.selectAll("circle")
       		  .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
+      		d3.selectAll("line")
+      		  .attr("stroke", linkColor(props.category,props.shortest_path_edges))
       	}else if(init > 0 && props.category == "spanning_tree"){
       		setInit(0)
       	}

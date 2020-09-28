@@ -63,8 +63,8 @@ const linkColor=(category,edges)=>{
 }
 
 function Chart(props){
-	const width = 500
-	const height = 500
+	const width = 800
+	const height = 800
 	const ref = useRef()
 	const [init,setInit] = useState(0);
 
@@ -76,6 +76,9 @@ function Chart(props){
 			// console.log(edges)
 			const svg = d3.select(ref.current)
 		    			  .attr("viewBox", [0, 0, width, height])
+
+		    d3.selectAll("g").remove()
+
 		    const layer1 = svg.append('g');
 			const layer2 = svg.append('g');
 			const layer3 = svg.append('g');
@@ -94,9 +97,10 @@ function Chart(props){
 
 		    const simulation = d3.forceSimulation(nodes)
 	              .force("center", d3.forceCenter(width/2, height/2))  
-	              .force("charge", d3.forceManyBody())
+	              .force("charge", d3.forceManyBody().strength(-50))
 	              .force("link", d3.forceLink(links).id(d => d.character))
 	              .force("radial",props.category=="spanning_tree"?d3.forceRadial(width/2):null)
+	              .force("collition",d3.forceCollide(1))
 
 	        const link = layer2
 		      .attr("stroke-opacity", 0.6)

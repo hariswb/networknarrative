@@ -3,6 +3,11 @@ body {
 	padding: 50;
 }
 
+@font-face {
+  font-family: inter;
+  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+}
+
 div {
 	/*background-color: teal;*/
 }
@@ -10,6 +15,10 @@ div {
 img {
 	width: 640px;
 	height: 426px;
+}
+
+p {
+	font-family: inter,sans-serif;
 }
 .container{
 	/*background-color: blue;*/
@@ -19,7 +28,55 @@ img {
 .menu{
 	/*background-color: blue;*/
 	width: 300px;
+	border: 1px;
 }	
+
+.menu-buttons ul{
+	list-style: none;
+	/*background-color: blue;*/
+	padding-inline-start: 0;
+}
+
+.menu-buttons p{
+	padding-inline-start: 30px;
+	/*background-color: blue;*/
+	text-align: justify;
+	color: grey;
+}
+
+.button{
+	font-size: 1rem;
+	border: none;
+	background-color: white;
+	font-family: 'Roboto Mono', monospace;
+}
+
+.button-selected{
+	font-size: 1rem;
+	color:teal;
+	border: none;
+	background-color: white;
+	text-decoration: underline;
+	outline:none;
+	font-family: 'Roboto Mono', monospace;
+}
+
+.button:hover{
+	text-decoration: underline;
+}
+
+.button:active{
+	outline:none;
+}
+
+.char-info{
+	text-align: justify;
+	font-family: inter,sans-serif;
+}
+
+.char-info-hidden{
+	display: none;
+}
 
 .chartbox{
 	/*background-color: blue;*/
@@ -27,6 +84,6 @@ img {
 
 .chart{
 	background-color: ;
-	width:500px;
-	height: 500px;
+	width: 800px;
+	height: 800px;
 }

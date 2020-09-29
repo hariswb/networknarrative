@@ -8,40 +8,65 @@ body {
   src: url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 }
 
-div {
-	/*background-color: teal;*/
-}
-
-img {
-	width: 640px;
-	height: 426px;
-}
-
 p {
 	font-family: inter,sans-serif;
 }
-.container{
-	/*background-color: blue;*/
-	display: flex;
+
+.grid-container{
+	/*background-color: ghostwhite;*/
+	display: grid;
+	grid-template-columns: auto 30vw 30vw;
+	grid-template-rows: auto auto 20vh;
+	max-height: 90vh;
+	min-width: 700px;
 }
 
+.item1{
+	grid-column: 1;
+	grid-row: 1/ span 3;
+	align-content:  right;
+	/*background-color: blue;*/
+}
+
+.item2{
+	grid-column: 2/ span 3;
+	grid-row: 1/ span 2;
+	/*background-color: blue;*/
+}
+.item3{
+	grid-column: 2/ span 3;
+	grid-row: 3;
+	/*background-color: blue;*/
+}
 .menu{
 	/*background-color: blue;*/
-	width: 300px;
-	border: 1px;
+	/*width: 300px;*/
+	/*padding:10px;*/
+	/*border-right: 1px solid grey;*/
+	/*margin: 0 20px 0 0;*/
+	/*padding-right: 30px;*/
+	max-width: 300px;
+	min-width: 300px;
 }	
 
 .menu-buttons ul{
 	list-style: none;
 	/*background-color: blue;*/
 	padding-inline-start: 0;
+	/*border-bottom: 1px solid grey;*/
+	/*padding-bottom: 10px;*/
 }
 
 .menu-buttons p{
-	padding-inline-start: 30px;
+	padding-inline-start: 20px;
+	padding-right: 20px;
 	/*background-color: blue;*/
 	text-align: justify;
 	color: grey;
+}
+
+.menu-info{
+
 }
 
 .button{
@@ -49,6 +74,7 @@ p {
 	border: none;
 	background-color: white;
 	font-family: 'Roboto Mono', monospace;
+	margin: 2px 0 2px 0;
 }
 
 .button-selected{
@@ -59,6 +85,7 @@ p {
 	text-decoration: underline;
 	outline:none;
 	font-family: 'Roboto Mono', monospace;
+	margin: 2px 0 2px 0;
 }
 
 .button:hover{
@@ -69,21 +96,40 @@ p {
 	outline:none;
 }
 
+.menu-info{
+	/*background-color: aquamarine;*/
+
+}
+
 .char-info{
+	/*background-color: lightgrey;*/
 	text-align: justify;
 	font-family: inter,sans-serif;
+	width: 500px;
+	overflow-y:scroll;
+	height: 20vh;
+	margin: auto;
+}
+
+.char-info p {
+	scrollbar-width: thin;
+	height: 100%;
+
 }
 
 .char-info-hidden{
 	display: none;
 }
 
-.chartbox{
-	/*background-color: blue;*/
+.chart{
+	/*background-color: grey;*/
+	/*width: 500px;*/
+	/*height: 500px;*/
 }
 
-.chart{
-	background-color: ;
-	width: 800px;
-	height: 800px;
+@media only screen and (min-width: 600px) {
+.container{
+
+}
+
 }

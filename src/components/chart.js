@@ -63,11 +63,11 @@ const linkColor=(category,edges)=>{
 }
 
 function Chart(props){
-	const width = 800
-	const height = 800
+	const width = props.chartSize.width
+	const height = 500;
 	const ref = useRef()
 	const [init,setInit] = useState(0);
-
+	
 	useEffect(() => {
 
 		if(init < 1 || props.category == "spanning_tree"){
@@ -141,10 +141,10 @@ function Chart(props){
       		setInit(0)
       	}
 
-  	}, [props.category])
+  	}, [props.category,props.chartSize.width])
 
 	return(
-			<div className="chart">
+			<div className="chart" style={{width:width,height:height}}>
 				<svg 
 		      		ref={ref}
 		      	/>

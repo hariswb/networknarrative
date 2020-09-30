@@ -1,10 +1,11 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: ['core-js/stable','regenerator-runtime/runtime','./src/index.js'],
-    output: {
+	output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         chunkFilename: '[id].js',
@@ -36,13 +37,13 @@ module.exports = {
         ]
     },
     plugins: [
+    	// new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: __dirname + '/src/index.html',
-            fileName: 'index.html',
+            filename: 'index.html',
             inject: 'body'
         })
     ]
-};
+}
 
-// "start": "webpack-dev-server --open --hot --mode development",
-    //"build": "webpack --mode production",
+//"start": "webpack-dev-server --open --config webpack.dev.js",

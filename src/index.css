@@ -1,67 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap");
+
+
 body {
 	margin: 50;
 	padding: 50;
 }
 
-@font-face {
-  font-family: inter;
-  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
-}
-
 p {
-	font-family: inter,sans-serif;
+	font-family: Inter,sans-serif;
+	color:#333;
 }
 
 .grid-container{
-	/*background-color: ghostwhite;*/
 	display: grid;
-	grid-template-columns: auto 30vw 30vw;
-	grid-template-rows: auto auto 20vh;
+	grid-template-columns: auto auto auto;
+	grid-template-rows: auto;
 	max-height: 90vh;
 	min-width: 700px;
+	grid-column-gap: 20px;
 }
 
 .item1{
 	grid-column: 1;
-	grid-row: 1/ span 3;
+	grid-row: 1;
 	align-content:  right;
-	/*background-color: blue;*/
+	max-width: 300px;
 }
 
 .item2{
-	grid-column: 2/ span 3;
-	grid-row: 1/ span 2;
-	/*background-color: blue;*/
+	grid-column: 2;
+	grid-row: 1;
+	max-width: 800px;
 }
 .item3{
-	grid-column: 2/ span 3;
-	grid-row: 3;
-	/*background-color: blue;*/
+	grid-column: 2;
+	grid-row: 1;
+	pointer-events: none;
 }
 .menu{
-	/*background-color: blue;*/
-	/*width: 300px;*/
-	/*padding:10px;*/
-	/*border-right: 1px solid grey;*/
-	/*margin: 0 20px 0 0;*/
-	/*padding-right: 30px;*/
-	max-width: 300px;
-	min-width: 300px;
+	/*max-width: 300px;*/
 }	
 
 .menu-buttons ul{
 	list-style: none;
-	/*background-color: blue;*/
 	padding-inline-start: 0;
-	/*border-bottom: 1px solid grey;*/
-	/*padding-bottom: 10px;*/
 }
 
 .menu-buttons p{
 	padding-inline-start: 20px;
 	padding-right: 20px;
-	/*background-color: blue;*/
-	text-align: justify;
+	/*text-align: justify;*/
 	color: grey;
 }
 
@@ -97,34 +85,39 @@ p {
 }
 
 .menu-info{
-	/*background-color: aquamarine;*/
 
 }
 
 .char-info{
-	/*background-color: lightgrey;*/
-	text-align: justify;
+	/*text-align: justify;*/
 	font-family: inter,sans-serif;
-	width: 500px;
+	width: 300px;
 	overflow-y:scroll;
-	height: 20vh;
-	margin: auto;
+	/*overflow: hidden;*/
+	height: auto;
+	max-height: 300px;
+	/*margin: auto;*/
+	background-color: rgba(260, 260, 260, 0.5);
+	border: 1px solid rgba(250, 250, 250, 0);
+	border-radius: 0px 0px 10px 0px;
+	float: right;
+	pointer-events: auto;
+
+}
+
+.hidden{
+	display: none;
 }
 
 .char-info p {
 	scrollbar-width: thin;
 	height: 100%;
-
+	margin: 10px;
 }
 
-.char-info-hidden{
-	display: none;
-}
 
 .chart{
-	/*background-color: grey;*/
-	/*width: 500px;*/
-	/*height: 500px;*/
+	height: 90vh;	
 }
 
 @media only screen and (min-width: 600px) {

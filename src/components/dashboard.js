@@ -35,7 +35,7 @@ categories.forEach((x)=>{
 function Dashboard(props) {
 	const [category,setCategory] =useState("introduction")
 	const [focus,setFocus]=useState("")
-	const [chartSize, setChartSize] = useState({width: window.innerWidth-300 < 800? window.innerWidth-300:800 ,height:window.innerHeight})
+	const [chartSize, setChartSize] = useState({width: window.innerWidth-300 < 800? window.innerWidth-300:800, height:window.innerHeight*0.9})
 	
 	function handleFocus(d){ 
 		setFocus(d)
@@ -61,8 +61,8 @@ function Dashboard(props) {
 	useEffect(()=>{
 		const debouncedHandleResize = debounce(function handleResize(){
 			setChartSize({
-				width:window.innerWidth-300 < 800? window.innerWidth-300:800 ,
-				height: window.innerHeight
+				width:window.innerWidth-300 < 800? window.innerWidth-300:800,
+				height: window.innerHeight*0.9,
 			})
 		}, 1000)
 		window.addEventListener('resize', debouncedHandleResize)
@@ -99,7 +99,7 @@ function Dashboard(props) {
 			  	/>
 	  		</div>
 
-	  		<div className="item3" style={{width:chartSize.width}}>
+	  		<div className="item3">
 			  	<CharInfo
 		  			focus = {focus}
 		  			chars = {data.characters}

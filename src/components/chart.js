@@ -25,6 +25,7 @@ const drag = simulation => {
 
 const nodeColor=(category,highest,shortest_path_nodes)=> {
 	const colorScheme = {
+		"introduction": d3.schemeDark2[0],
 		"plot_summary": d3.schemeDark2[0],
 		"community":(d)=>getColor(d,"interpolateTurbo"),
 		"degree_centrality": (d)=>getColor(d,"interpolatePlasma"),
@@ -63,8 +64,8 @@ const linkColor=(category,edges)=>{
 }
 
 function Chart(props){
-	const width = props.chartSize.width
-	const height = 500;
+	const width = props.chartSize.width;
+	const height = props.chartSize.height;
 	const ref = useRef()
 	const [init,setInit] = useState(0);
 	
@@ -89,7 +90,9 @@ function Chart(props){
 			        		.attr("width", width)
 	      					.attr("height", height)
 		    				.attr("fill","white")
-		    				.on("click",function(){
+		    				.on("click",()=>console.log("oi"))
+		    				.on("click",function(d,i){
+		    					console.log('oi')
 		    					d3.select(this).text(d=> props.onFocusChange(""))})
 
 			const links = edges.map(d => Object.create({"source": d[0],"target":d[1],"value":1}))
@@ -119,7 +122,8 @@ function Chart(props){
 		      .attr("r", 7)
 		      .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
 		      .call(drag(simulation))
-		      .on("click",function(){ 
+		      .on("click",function(d,i){ 
+
 		      	d3.select(this).text(d=> props.onFocusChange(d.character))})
 		      
 	      	simulation.on("tick", () => {

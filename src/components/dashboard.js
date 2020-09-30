@@ -93,6 +93,7 @@ function Dashboard(props) {
 			  		category={category}
 			  		highest={highestOfCategories}
 			  		onFocusChange={(d)=>handleFocus(d)}
+			  		focus={focus}
 			  		shortest_path_edges={data.shortest_path}
 			  		shortest_path_nodes={data.shortest_path_nodes}
 			  		chartSize={chartSize}

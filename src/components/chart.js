@@ -70,11 +70,9 @@ function Chart(props){
 	const [init,setInit] = useState(0);
 	
 	useEffect(() => {
-
-		if(init < 1 || props.category == "spanning_tree"){
+		if(init < 1 || (props.category == "spanning_tree")){
 			const edges = props.category == "spanning_tree"?props.spanning_tree:props.edges
-			
-			// console.log(edges)
+
 			const svg = d3.select(ref.current)
 		    			  .attr("viewBox", [0, 0, width, height])
 
@@ -92,7 +90,6 @@ function Chart(props){
 		    				.attr("fill","white")
 		    				.on("click",()=>console.log("oi"))
 		    				.on("click",function(d,i){
-		    					console.log('oi')
 		    					d3.select(this).text(d=> props.onFocusChange(""))})
 
 			const links = edges.map(d => Object.create({"source": d[0],"target":d[1],"value":1}))
@@ -123,9 +120,10 @@ function Chart(props){
 		      .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
 		      .call(drag(simulation))
 		      .on("click",function(d,i){ 
+		      	d3.select(this)
+		      	  .text(d=> props.onFocusChange(d.character))
+		      	})
 
-		      	d3.select(this).text(d=> props.onFocusChange(d.character))})
-		      
 	      	simulation.on("tick", () => {
 			    link.attr("x1", d => d.source.x)
 			        .attr("y1", d => d.source.y)
@@ -139,13 +137,21 @@ function Chart(props){
       	}else if(init > 0 ){
       		d3.selectAll("circle")
       		  .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
+
       		d3.selectAll("line")
       		  .attr("stroke", linkColor(props.category,props.shortest_path_edges))
-      	}else if(init > 0 && props.category == "spanning_tree"){
-      		setInit(0)
       	}
+      	// else if(init > 0 && props.category == "spanning_tree"){
+      	// 	setInit(0)
+      	// }
+  	}, [props.category,props.chartSize])
+	
+	useEffect(()=>{
+		d3.selectAll("circle")
+		  .attr("stroke",(d)=>d.character==props.focus?"black":"white")
+		  .attr("stroke-width",(d)=>d.character==props.focus?4:1.5)
 
-  	}, [props.category,props.chartSize.width])
+	},[props.focus])
 
 	return(
 			<div className="chart" style={{width:width,height:height}}>

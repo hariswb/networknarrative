@@ -8,16 +8,19 @@ function CharInfo(props) {
 	}
 	console.log()
 
+	function createMarkup(text) {
+  		return {__html: text};
+	}
 	return (
-		<div className={props.focus!==""?"char-info":"char-info hidden"}>
-			<h4>Character Info</h4>
-			<p>
+		<div className={props.focus!==""?"char-info texture":"char-info hidden"}>
+			<div>
 				<strong>{props.focus}: </strong>
-				{getNodeInfo(props.focus)==null?
+				<p dangerouslySetInnerHTML={
+					createMarkup(getNodeInfo(props.focus)==null?
 					"No info":
-					getNodeInfo(props.focus)
-				}
-			</p>
+					getNodeInfo(props.focus))} />
+				
+			</div>
 		</div>
 		)
 }

@@ -11,8 +11,12 @@ function CharInfo(props) {
 	function createMarkup(text) {
   		return {__html: text};
 	}
+	const boxWidth = ()=>{
+		return props.chartSize.width > 300? 300:props.chartSize.width
+	}
 	return (
-		<div className={props.focus!==""?"char-info texture":"char-info hidden"}>
+		<div className={props.focus!==""?"char-info":"char-info hidden"}
+				style={{width:boxWidth}}>
 			<div>
 				<strong>{props.focus}: </strong>
 				<p dangerouslySetInnerHTML={

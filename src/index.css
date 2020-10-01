@@ -2,7 +2,6 @@
 
 
 body {
-	margin: 50;
 	padding: 50;
 }
 
@@ -13,10 +12,9 @@ p {
 
 .grid-container{
 	display: grid;
-	grid-template-columns: auto auto auto;
-	grid-template-rows: auto;
-	max-height: 90vh;
-	min-width: 700px;
+	grid-template-columns: auto auto;
+	grid-template-rows: 100vh;
+	max-width: 1200px;
 	grid-column-gap: 20px;
 }
 
@@ -32,6 +30,7 @@ p {
 	grid-row: 1;
 	max-width: 800px;
 }
+
 .item3{
 	grid-column: 2;
 	grid-row: 1;
@@ -117,12 +116,83 @@ p {
 
 
 .chart{
-	height: 90vh;	
+	/*height: 90vh;	*/
+	margin: auto;
 }
 
-@media only screen and (min-width: 600px) {
-.container{
+@media only screen and (max-width: 600px) {
+	body{
+		padding: 0;
+		margin: 0;
+	}
+	.grid-container{
+		display: grid;
+		grid-template-columns: auto;
+		grid-template-rows: auto;
+		position: absolute;
+		float: left;
+		grid-column-gap: 0;
+		margin: auto;
 
-}
+	}
+	.item1{
+		grid-column: 1;
+		grid-row: 1;
+		/*z-index: 2;*/
+		pointer-events: none;
+	}
+	.item2{
+		grid-column: 1;
+		grid-row: 1;
+		/*z-index: 1;*/
 
+	}
+	.item3{
+		grid-column: 1;
+		grid-row: 1;
+		z-index: 2;
+	}
+	.button-popup{
+		pointer-events: all;
+		position: absolute;
+		z-index: 6;
+		width:40px;
+		height: 40px;
+		border: 5px solid white;
+		border-radius: 15px;
+		background-color: coral;
+		text-decoration: none;
+		outline:none;
+		right:  0;
+		top: 0;
+		margin: 10px;
+	}
+	.menu-background{
+		opacity: 0.5;
+		background-color: white;
+		z-index: 4;
+		position: absolute;
+		top: 0;
+		left:  0;
+		pointer-events: auto;
+	}
+
+	.menu{
+		background-color: white;
+		pointer-events: auto;
+		/*display: none;*/
+		z-index: 5;
+		position: absolute;
+		top: 0;
+		left:  0;
+		padding-top: 40px;
+	}
+
+	.char-info{
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		z-index: 2;
+	}
 }
+ 	

@@ -68,9 +68,10 @@ function Chart(props){
 	const height = props.chartSize.height;
 	const ref = useRef()
 	const [init,setInit] = useState(0);
-	
+	const [prevSize, setPrevSize] = useState({"width":width,"height":height})
 	useEffect(() => {
-		if(init < 1 || (props.category == "spanning_tree")){
+		if(init < 1 || props.category == "spanning_tree" || width -prevSize.width !== 0 || height -prevSize.height !== 0){
+			console.log(width,height)
 			const edges = props.category == "spanning_tree"?props.spanning_tree:props.edges
 
 			const svg = d3.select(ref.current)
@@ -81,6 +82,7 @@ function Chart(props){
 		    const layer1 = svg.append('g');
 			const layer2 = svg.append('g');
 			const layer3 = svg.append('g');
+
 			const rect = layer1
 							.append("rect")
 		    				.attr("x1", 0)
@@ -88,7 +90,6 @@ function Chart(props){
 			        		.attr("width", width)
 	      					.attr("height", height)
 		    				.attr("fill","white")
-		    				.on("click",()=>console.log("oi"))
 		    				.on("click",function(d,i){
 		    					d3.select(this).text(d=> props.onFocusChange(""))})
 
@@ -134,23 +135,19 @@ function Chart(props){
 			  });
 
 	      	props.category=="spanning_tree"?setInit(0):setInit(1)
+			setPrevSize({"width":width,"height":height})	      	
       	}else if(init > 0 ){
       		d3.selectAll("circle")
       		  .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
-
       		d3.selectAll("line")
       		  .attr("stroke", linkColor(props.category,props.shortest_path_edges))
       	}
-      	// else if(init > 0 && props.category == "spanning_tree"){
-      	// 	setInit(0)
-      	// }
   	}, [props.category,props.chartSize])
 	
 	useEffect(()=>{
 		d3.selectAll("circle")
 		  .attr("stroke",(d)=>d.character==props.focus?"black":"white")
 		  .attr("stroke-width",(d)=>d.character==props.focus?4:1.5)
-
 	},[props.focus])
 
 	return(

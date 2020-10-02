@@ -36,7 +36,7 @@ function Dashboard(props) {
 	const [category,setCategory] =useState("introduction")
 	const [focus,setFocus]=useState("")
 	const [chartSize, setChartSize] = 
-			useState({  width: handleWidth(window.innerWidth), 
+			useState({  width: window.innerWidth, 
 						height:window.innerHeight *0.95})
 	
 	function handleFocus(d){ 
@@ -47,14 +47,7 @@ function Dashboard(props) {
 		setCategory(d)
 	}
 
-	function handleWidth(width){
-		console.log(width)
-		if(width> 600){
-			return width-300 < 800? width-300:800
-		}else{
-			return width
-		}
-	}
+	
 
 	function debounce(fn, ms) {
 	  let timer
@@ -70,7 +63,7 @@ function Dashboard(props) {
 	useEffect(()=>{
 		const debouncedHandleResize = debounce(function handleResize(){
 			setChartSize({
-				width:handleWidth(window.innerWidth),
+				width:window.innerWidth,
 				height: window.innerHeight *0.95,
 			})
 		}, 1000)

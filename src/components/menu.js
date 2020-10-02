@@ -1,10 +1,10 @@
 import React,  {useState, useEffect} from "react";
 
 function Menu(props) {
-	const [selected,setSelected] = useState("")
-	const [show, setShow] = useState(width > 600? "block":"none")
-	const width = props.chartSize.width
+	const width = props.chartSize.width //> 300 &&  props.chartSize.width < 800?
+					// props.chartSize.width+300:props.chartSize.width
 	const height = props.chartSize.height
+	const [show, setShow] = useState(width > 600? "block":"none")
 	useEffect(()=>{
 	},[])
 
@@ -17,8 +17,6 @@ function Menu(props) {
 								</button>
 								</li>
 							)
-	// width:width*0.7,height:height
-	console.log(show)
 	const buttonPopup = <button className="button-popup" onClick={()=>setShow(show=="none"?"block":"none")}/>
 	const backgroundPopup = {
 		"display":show,

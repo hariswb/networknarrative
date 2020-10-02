@@ -53,8 +53,9 @@ p {
 }
 
 .menu-info{
-
-}
+	/*overflow-y:scroll;*/
+	/*height: 100%;*/
+}	
 
 .button{
 	font-size: 1rem;
@@ -81,10 +82,6 @@ p {
 
 .button:active{
 	outline:none;
-}
-
-.menu-info{
-
 }
 
 .char-info{
@@ -118,6 +115,10 @@ p {
 .chart{
 	/*height: 90vh;	*/
 	margin: auto;
+}
+
+.thebar{
+	pointer-events: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -187,7 +188,8 @@ p {
 		left:  0;
 		padding-top: 40px;
 	}
-
+	.menu-info{
+	}
 	.char-info{
 		position: absolute;
 		bottom: 0;

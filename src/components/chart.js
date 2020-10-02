@@ -63,25 +63,63 @@ const linkColor=(category,edges)=>{
 	}
 }
 
+function handleWidth(width){
+		if(width> 600){
+			return width-300 < 800? width-300:800
+		}else{
+			return width
+		}
+	}
+
+function legend(selection,highest,category){
+	console.log(category.match(/centrality/i)!==null)
+	const centrality = category.match(/centrality/i)!==null
+	// selection
+	//     .append("rect")
+	//     .attr("class","thebar")
+	// 	.attr("fill","black")
+	// 	.attr("opacity",centrality?1:0)
+	// 	.attr("width",50)
+	// 	.attr("height",50)
+	// 	.attr("x",100)
+	// 	.attr("y",100)
+	const legendWidth = 100;
+	const legendData = d3.range(100).map(x=>x*highest.eigenvector_centrality)
+	selection
+		.selectAll("rect")
+	   	.attr("class","thebar")
+		.data(legendData)
+	    .enter()
+	    .append("rect")
+		.attr("opacity",centrality?1:0)
+	    .attr("fill",(d)=>d3.rgb(200,200-3*d,d*5,1))
+	    .attr("width",2)
+	    .attr("height",10)
+	    .attr("x",d=>d/100*legendWidth)
+	    .attr("y",100)
+}
+
 function Chart(props){
-	const width = props.chartSize.width;
+	const width = handleWidth(props.chartSize.width);
 	const height = props.chartSize.height;
 	const ref = useRef()
 	const [init,setInit] = useState(0);
 	const [prevSize, setPrevSize] = useState({"width":width,"height":height})
 	useEffect(() => {
 		if(init < 1 || props.category == "spanning_tree" || width -prevSize.width !== 0 || height -prevSize.height !== 0){
-			console.log(width,height)
 			const edges = props.category == "spanning_tree"?props.spanning_tree:props.edges
 
 			const svg = d3.select(ref.current)
 		    			  .attr("viewBox", [0, 0, width, height])
 
 		    d3.selectAll("g").remove()
+      		d3.selectAll(".thebar").remove()
 
 		    const layer1 = svg.append('g');
 			const layer2 = svg.append('g');
 			const layer3 = svg.append('g');
+			const layer4 = svg.append("g").attr("class","legendBar");
+			const layer5 = svg.append("g");
 
 			const rect = layer1
 							.append("rect")
@@ -93,12 +131,14 @@ function Chart(props){
 		    				.on("click",function(d,i){
 		    					d3.select(this).text(d=> props.onFocusChange(""))})
 
+
+
 			const links = edges.map(d => Object.create({"source": d[0],"target":d[1],"value":1}))
 	  		const nodes = props.nodes.map(d => Object.create(d));
 
 		    const simulation = d3.forceSimulation(nodes)
 	              .force("center", d3.forceCenter(width/2, height/2))  
-	              .force("charge", d3.forceManyBody().strength(-50))
+	              .force("charge", d3.forceManyBody())
 	              .force("link", d3.forceLink(links).id(d => d.character))
 	              .force("radial",props.category=="spanning_tree"?d3.forceRadial(width/2):null)
 	              .force("collition",d3.forceCollide(1))
@@ -134,6 +174,21 @@ function Chart(props){
 			        .attr("cy", d => d.y);
 			  });
 
+		    d3.select(".legendBar")
+      		  .call(legend,props.highest,props.category)
+
+		    // const scale = d3.scaleLinear()
+		    // 				.domain([legendData[0],legendData[99]])
+		    // 				.range([0, legendWidth])
+
+		    // const xaxis = d3.axisBottom(scale)
+
+		    // const legendAxis = layer5
+		    // 	.attr("transform", "translate(0,110)") 
+		    // 	.call(xaxis)
+
+    		// console.log(legendbardata)
+
 	      	props.category=="spanning_tree"?setInit(0):setInit(1)
 			setPrevSize({"width":width,"height":height})	      	
       	}else if(init > 0 ){
@@ -141,6 +196,13 @@ function Chart(props){
       		  .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
       		d3.selectAll("line")
       		  .attr("stroke", linkColor(props.category,props.shortest_path_edges))
+		    
+      		d3.selectAll(".thebar").remove()
+      		d3.select(".legendBar")
+      		  .call(legend,props.highest,props.category)
+
+
+
       	}
   	}, [props.category,props.chartSize])
 	

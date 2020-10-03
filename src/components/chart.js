@@ -72,31 +72,47 @@ function handleWidth(width){
 	}
 
 function legend(selection,highest,category){
-	console.log(category.match(/centrality/i)!==null)
 	const centrality = category.match(/centrality/i)!==null
-	// selection
-	//     .append("rect")
-	//     .attr("class","thebar")
-	// 	.attr("fill","black")
-	// 	.attr("opacity",centrality?1:0)
-	// 	.attr("width",50)
-	// 	.attr("height",50)
-	// 	.attr("x",100)
-	// 	.attr("y",100)
 	const legendWidth = 100;
-	const legendData = d3.range(100).map(x=>x*highest.eigenvector_centrality)
+	const max = centrality?highest[category]:1
+	const legendData = d3.range(100).map(x=>x*max)
+	const xPos = 10
+	const yPos = 10
+	const colorSchemes ={
+		"degree_centrality": "interpolatePlasma",
+		"eigenvector_centrality": "interpolateViridis",
+		"betweenness_centrality": "interpolateCool",
+		"closeness_centrality": "interpolateCividis",
+	}
+
+	// Color bar
 	selection
 		.selectAll("rect")
-	   	.attr("class","thebar")
 		.data(legendData)
 	    .enter()
 	    .append("rect")
+	   	.attr("class","thebar")
 		.attr("opacity",centrality?1:0)
-	    .attr("fill",(d)=>d3.rgb(200,200-3*d,d*5,1))
-	    .attr("width",2)
+	    .attr("fill",(d)=>centrality?getColor((d/max)/100,colorSchemes[category]):"white")
+	    .attr("width",1)
 	    .attr("height",10)
-	    .attr("x",d=>d/100*legendWidth)
-	    .attr("y",100)
+	    .attr("x",d=>d/max+xPos)
+	    .attr("y",yPos)
+
+	function getColor(d,scheme){
+		return d3.scaleSequential(d3[scheme])(d)
+	}
+
+	// Axis
+	const scale = d3.scaleLinear().domain([0,highest[category]]).range([0, 100])
+	const xaxis = d3.axisBottom(scale).ticks(2,".2f").tickValues([0,max/2,max])
+	selection
+		.append("g")
+		.attr("class","thebar")
+		.attr("opacity",centrality?1:0)
+		.attr("transform", `translate( ${xPos},${yPos + 10})`) 
+		.call(centrality?xaxis:()=>{})
+
 }
 
 function Chart(props){
@@ -119,7 +135,6 @@ function Chart(props){
 			const layer2 = svg.append('g');
 			const layer3 = svg.append('g');
 			const layer4 = svg.append("g").attr("class","legendBar");
-			const layer5 = svg.append("g");
 
 			const rect = layer1
 							.append("rect")
@@ -174,35 +189,22 @@ function Chart(props){
 			        .attr("cy", d => d.y);
 			  });
 
+	      	props.category=="spanning_tree"?setInit(0):setInit(1)
+			setPrevSize({"width":width,"height":height})	      	
+		    
 		    d3.select(".legendBar")
       		  .call(legend,props.highest,props.category)
 
-		    // const scale = d3.scaleLinear()
-		    // 				.domain([legendData[0],legendData[99]])
-		    // 				.range([0, legendWidth])
-
-		    // const xaxis = d3.axisBottom(scale)
-
-		    // const legendAxis = layer5
-		    // 	.attr("transform", "translate(0,110)") 
-		    // 	.call(xaxis)
-
-    		// console.log(legendbardata)
-
-	      	props.category=="spanning_tree"?setInit(0):setInit(1)
-			setPrevSize({"width":width,"height":height})	      	
       	}else if(init > 0 ){
+      		d3.selectAll(".thebar").remove()
+      		
       		d3.selectAll("circle")
       		  .attr("fill", nodeColor(props.category,props.highest,props.shortest_path_nodes))
       		d3.selectAll("line")
       		  .attr("stroke", linkColor(props.category,props.shortest_path_edges))
 		    
-      		d3.selectAll(".thebar").remove()
       		d3.select(".legendBar")
       		  .call(legend,props.highest,props.category)
-
-
-
       	}
   	}, [props.category,props.chartSize])
 	

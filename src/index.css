@@ -49,7 +49,7 @@ p {
 	padding-inline-start: 20px;
 	padding-right: 20px;
 	/*text-align: justify;*/
-	color: grey;
+	color: #111;
 }
 
 .menu-info{
@@ -93,12 +93,13 @@ p {
 	height: auto;
 	max-height: 300px;
 	/*margin: auto;*/
-	background-color: rgba(260, 260, 260, 0.5);
+	background-color: rgba(260, 260, 260, 0.7);
 	border: 1px solid rgba(250, 250, 250, 0);
 	border-radius: 0px 0px 10px 0px;
 	float: right;
 	pointer-events: auto;
-
+	padding: 10px;
+	margin: 10px;
 }
 
 .hidden{
@@ -117,8 +118,10 @@ p {
 	margin: auto;
 }
 
-.thebar{
+.legendBar{
 	pointer-events: none;
+	z-index: 6;
+	position: absolute;
 }
 
 @media only screen and (max-width: 600px) {

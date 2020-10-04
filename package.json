@@ -1,10 +1,10 @@
 {
-  "name": "graphnarrative",
+  "name": "networknarrative",
   "version": "1.0.0",
-  "description": "A Webpack + Babel + React Starter bolerplate ",
+  "description": "An experiment dashboard of reading Les Miserables novel by its network",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mlomboglia/webpack-react-starter"
+    "url": "https://github.com/hariswb/networknarrative"
   },
   "keywords": [
     "Autoprefixer",
@@ -13,7 +13,7 @@
     "React",
     "Babel"
   ],
-  "author": "Marcos Lomboglia <marcos.lomboglia@gmail.com> (https://marcoslombog.com)",
+  "author": "hariswb",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

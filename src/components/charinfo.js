@@ -6,7 +6,6 @@ function CharInfo(props) {
 		const charIndex= props.chars.findIndex(node=>node.character == charName)
 		return charIndex >= 0? props.chars[charIndex].info:"none"
 	}
-	console.log()
 
 	function createMarkup(text) {
   		return {__html: text};
@@ -15,8 +14,7 @@ function CharInfo(props) {
 		return props.chartSize.width > 300? 300:props.chartSize.width
 	}
 	return (
-		<div className={props.focus!==""?"char-info":"char-info hidden"}
-				style={{width:boxWidth}}>
+		<div className={props.focus!==""?"char-info":"char-info hidden"}>
 			<div>
 				<strong>{props.focus}: </strong>
 				<p dangerouslySetInnerHTML={

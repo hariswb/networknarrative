@@ -92,14 +92,14 @@ p {
 	/*overflow: hidden;*/
 	height: auto;
 	max-height: 300px;
+	max-width: 300px;
 	/*margin: auto;*/
 	background-color: rgba(260, 260, 260, 0.7);
 	border: 1px solid rgba(250, 250, 250, 0);
 	border-radius: 0px 0px 10px 0px;
 	float: right;
 	pointer-events: auto;
-	padding: 10px;
-	margin: 10px;
+	padding: 10px 0 10px 0;
 }
 
 .hidden{
@@ -160,11 +160,11 @@ p {
 		pointer-events: all;
 		position: absolute;
 		z-index: 6;
-		width:40px;
-		height: 40px;
-		border: 5px solid white;
+		width:35px;
+		height: 35px;
+		border: 5px solid teal;
 		border-radius: 15px;
-		background-color: coral;
+		background-color: teal;
 		text-decoration: none;
 		outline:none;
 		right:  0;
@@ -201,3 +201,12 @@ p {
 	}
 }
  	
+@media only screen and (max-width: 300px) {
+	.char-info{
+		width: 90vw;
+	}
+	.menu-buttons p{
+		
+	}
+
+}

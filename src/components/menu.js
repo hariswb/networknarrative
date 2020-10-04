@@ -1,8 +1,7 @@
 import React,  {useState, useEffect} from "react";
 
 function Menu(props) {
-	const width = props.chartSize.width //> 300 &&  props.chartSize.width < 800?
-					// props.chartSize.width+300:props.chartSize.width
+	const width = props.chartSize.width 
 	const height = props.chartSize.height
 	const [show, setShow] = useState(width > 600? "block":"none")
 	useEffect(()=>{

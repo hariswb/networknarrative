@@ -94,11 +94,11 @@ function legend(selection,highest,category){
 	   	.attr("class","thebar")
 		.attr("opacity",centrality?1:0)
 	    .attr("fill",(d)=>centrality?getColor((d/max)/100,colorSchemes[category]):"white")
-	    .attr("width",1)
+	    .attr("width",1.1)
 	    .attr("height",10)
 	    .attr("x",d=>d/max+xPos)
 	    .attr("y",yPos)
-
+	
 	function getColor(d,scheme){
 		return d3.scaleSequential(d3[scheme])(d)
 	}
@@ -112,7 +112,6 @@ function legend(selection,highest,category){
 		.attr("opacity",centrality?1:0)
 		.attr("transform", `translate( ${xPos},${yPos + 10})`) 
 		.call(centrality?xaxis:()=>{})
-
 }
 
 function Chart(props){
@@ -208,6 +207,8 @@ function Chart(props){
       	}
   	}, [props.category,props.chartSize])
 	
+	//Focus click node
+
 	useEffect(()=>{
 		d3.selectAll("circle")
 		  .attr("stroke",(d)=>d.character==props.focus?"black":"white")

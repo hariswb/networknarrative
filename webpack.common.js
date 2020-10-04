@@ -9,7 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         chunkFilename: '[id].js',
-        publicPath: '/graphnarrative/'
+        publicPath: '/networknarrative/'
     },
     resolve: {
         extensions: ['.js', '.jsx']
